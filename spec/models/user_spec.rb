@@ -9,6 +9,7 @@ describe User, type: :model do
   describe "validations" do
     it { should validate_presence_of :name }
     it { should validate_presence_of :email }
+    it { should have_secure_password }
     describe "email" do
       before do
         @user_1 = User.create!(name: "Tony Soprano", email: "wokeupthismorning@gmail.com")
