@@ -2,7 +2,7 @@ require "rails_helper"
 
 describe "Movies discover page" do
   before do
-    @user1 = User.create!(name: "User One", email: "user1@test.com")
+    @user1 = User.create!(name: "User One", email: "user1@test.com", password: 'test', password_confirmation: 'test')
     visit "/users/#{@user1.id}/discover"
   end
 

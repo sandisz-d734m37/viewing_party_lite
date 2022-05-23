@@ -4,7 +4,7 @@ describe "user new page" do
   describe "as a user" do
     describe "when i visit the /register path" do
       before do
-        @user_1 = User.create!(name: "Tony Soprano", email: "wokeupthismorning@gmail.com")
+        @user_1 = User.create!(name: "Tony Soprano", email: "wokeupthismorning@gmail.com", password: 'test', password_confirmation: 'test')
       end
 
       it "i see a form to register, including name and email" do
