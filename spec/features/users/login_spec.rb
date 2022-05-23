@@ -9,12 +9,30 @@ describe "login page" do
         visit "/login"
       end
 
-      it "has a form to log in" do
+      it "has a form to log in and logs you in if password is correct" do
         fill_in "Email", with: "varsityathlete@gmail.com"
         fill_in "Password", with: "test"
         click_button "Log in"
 
         expect(current_path).to eq("/users/#{@user_2.id}")
+      end
+
+      it "shows error if password is incorrect" do
+        fill_in "Email", with: "varsityathlete@gmail.com"
+        fill_in "Password", with: "wrong"
+        click_button "Log in"
+
+        expect(current_path).to eq("/login")
+        expect(page).to have_content("Invalid email or password")
+      end
+
+      it "shows error if email is incorrect" do
+        fill_in "Email", with: "regular_athlete@gmail.com"
+        fill_in "Password", with: "test"
+        click_button "Log in"
+
+        expect(current_path).to eq("/login")
+        expect(page).to have_content("Invalid email or password")
       end
     end
   end
