@@ -1,0 +1,13 @@
+<%= form_with url: "/login", method: :post, local: true do |form| %>
+  <%= form.label :email %>
+  <%= form.text_field :email %>
+
+  <%= form.label :password %>
+  <%= form.password_field :password %>
+
+  <%= form.submit "Log in" %>
+<% end %>
+
+<% flash.each do |type, message| %>
+  <p><%= message %></p>
+<% end %>

@@ -2,9 +2,9 @@ require "rails_helper"
 
 describe "User dashboard/show" do
   before do
-    @user1 = User.create!(name: "User One", email: "user1@test.com")
-    @user2 = User.create!(name: "User Two", email: "user2@test.com")
-    @user3 = User.create!(name: "User Three", email: "user3@test.com")
+    @user1 = User.create!(name: "User One", email: "user1@test.com", password: 'test', password_confirmation: 'test')
+    @user2 = User.create!(name: "User Two", email: "user2@test.com", password: 'test', password_confirmation: 'test')
+    @user3 = User.create!(name: "User Three", email: "user3@test.com", password: 'test', password_confirmation: 'test')
 
     @u1_vp = Party.create!(event_date: DateTime.new(2002, 0o4, 26, 6, 0, 0, "-07:00"), duration: "230 mins", start_time: DateTime.new(2002, 0o4, 26, 6, 0, 0, "-07:00"), user_id: @user1.id, movie_id: 24021)
     @u1_vp_inv_1 = Invitation.create!(user_id: @user1.id, party_id: @u1_vp.id)

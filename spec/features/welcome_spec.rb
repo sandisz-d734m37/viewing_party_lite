@@ -4,8 +4,8 @@ describe "welcome page" do
   describe "as a user" do
     describe "when i visit the root path" do
       before do
-        @user_1 = User.create!(name: "Tony Soprano", email: "wokeupthismorning@gmail.com")
-        @user_2 = User.create!(name: "Junior Soprano", email: "varsityathlete@gmail.com")
+        @user_1 = User.create!(name: "Tony Soprano", email: "wokeupthismorning@gmail.com", password: 'test', password_confirmation: 'test')
+        @user_2 = User.create!(name: "Junior Soprano", email: "varsityathlete@gmail.com", password: 'test', password_confirmation: 'test')
         visit "/"
       end
 
@@ -33,6 +33,12 @@ describe "welcome page" do
         click_link("Return to Home Page")
 
         expect(current_path).to eq("/")
+      end
+
+      it "I see a log in link" do
+        expect(page).to have_link("Log in")
+        click_link("Log in")
+        expect(current_path).to eq("/login")
       end
     end
   end
