@@ -12,7 +12,7 @@ describe User, type: :model do
     it { should have_secure_password }
     describe "email" do
       before do
-        @user_1 = User.create!(name: "Tony Soprano", email: "wokeupthismorning@gmail.com")
+        @user_1 = User.create!(name: "Tony Soprano", email: "wokeupthismorning@gmail.com", password: 'test', password_confirmation: 'test')
       end
 
       it { should allow_value("cleavermovie@gmail.com").for(:email) }
