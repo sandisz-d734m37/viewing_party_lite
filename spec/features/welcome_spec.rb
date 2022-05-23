@@ -37,6 +37,8 @@ describe "welcome page" do
 
       it "I see a log in link" do
         expect(page).to have_link("Log in")
+        click_link("Log in")
+        expect(current_path).to eq("/login")
       end
     end
   end
