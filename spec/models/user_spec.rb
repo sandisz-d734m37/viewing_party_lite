@@ -9,14 +9,19 @@ describe User, type: :model do
   describe "validations" do
     it { should validate_presence_of :name }
     it { should validate_presence_of :email }
+    it { should validate_presence_of :password_digest }
     it { should have_secure_password }
-    describe "email" do
+    describe "email & password" do
       before do
         @user_1 = User.create!(name: "Tony Soprano", email: "wokeupthismorning@gmail.com", password: 'test', password_confirmation: 'test')
       end
 
       it { should allow_value("cleavermovie@gmail.com").for(:email) }
       it { should_not allow_value("wokeupthismorning@gmail.com").for(:email) }
+      it "should have a password and password digest" do
+        expect(@user_1).to_not have_attribute(:password)
+        expect(@user_1.password_digest).to_not eq("test")
+      end
     end
   end
 

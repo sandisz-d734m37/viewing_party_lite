@@ -11,14 +11,15 @@ class UsersController < ApplicationController
     if user.save
       redirect_to "/users/#{user.id}"
     else
-      redirect_to "/register"
       flash[:invalid_email] = "There is already an account associated with this e-mail address."
+      flash[:invalid_password] = user.errors.full_messages.to_sentence
+      render :new
     end
   end
 
   private
 
   def user_params
-    params.permit(:name, :email)
+    params.permit(:name, :email, :password, :password_confirmation)
   end
 end

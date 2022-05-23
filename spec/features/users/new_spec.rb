@@ -4,6 +4,7 @@ describe "user new page" do
   describe "as a user" do
     describe "when i visit the /register path" do
       before do
+        User.destroy_all
         @user_1 = User.create!(name: "Tony Soprano", email: "wokeupthismorning@gmail.com", password: 'test', password_confirmation: 'test')
       end
 
@@ -11,9 +12,9 @@ describe "user new page" do
         visit "/register"
 
         fill_in "Name", with: "Junior Soprano"
-        fill_in "Email", with: "varsityathlete@gmail.com"
+        fill_in "Email", with: "nothing_not_anything@gmail.com"
         fill_in "Password", with: "test_password"
-        fill_in "Confirm Password", with: "test_password"
+        fill_in "Password confirmation", with: "test_password"
 
         click_button "Register"
 
@@ -27,11 +28,11 @@ describe "user new page" do
         fill_in "Name", with: "Junior Soprano"
         fill_in "Email", with: "varsityathlete@gmail.com"
         fill_in "Password", with: "test_password"
-        fill_in "Confirm Password", with: "wrong"
+        fill_in "Password confirmation", with: "wrong"
 
         click_button "Register"
 
-        expect(page).to have_content("Error message")
+        expect(page).to have_content("Password confirmation doesn't match Password")
         expect(page).not_to have_content("Junior Soprano's page")
       end
 
@@ -41,7 +42,7 @@ describe "user new page" do
         fill_in "Name", with: "Junior Soprano"
         fill_in "Email", with: "wokeupthismorning@gmail.com"
         fill_in "Password", with: "test_password"
-        fill_in "Confirm Password", with: "test_password"
+        fill_in "Password confirmation", with: "test_password"
 
         click_button "Register"
 
