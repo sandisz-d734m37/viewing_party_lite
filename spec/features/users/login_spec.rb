@@ -14,7 +14,7 @@ describe "login page" do
         fill_in "Password", with: "test"
         click_button "Log in"
 
-        expect(current_path).to eq("/dashboard")
+        expect(current_path).to eq("/")
       end
 
       it "shows error if password is incorrect" do

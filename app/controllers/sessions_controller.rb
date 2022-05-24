@@ -6,7 +6,7 @@ class SessionsController < ApplicationController
     if user && user.authenticate(params[:password])
       # binding.pry
       session[:user_id] = user.id
-      redirect_to "/dashboard"
+      redirect_to "/"
       flash[:success] = "Welcome, #{user.email}"
     else
       flash[:invalid_password] = "Invalid email or password"
