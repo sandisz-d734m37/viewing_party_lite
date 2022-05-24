@@ -1,28 +1,20 @@
 class UsersController < ApplicationController
   def show
-    @user = User.find(params[:id])
+    if params[:user_id]
+      @user = User.find(params[:user_id])
+    else
+      @user = User.find(session[:user_id])
+    end
   end
 
   def new
   end
 
-  def login
-  end
-
-  def login_user
-    user = User.find_by(email: params[:email])
-    if !user.nil? && user.authenticate(params[:password])
-      redirect_to("/users/#{user.id}")
-    else
-      redirect_to("/login")
-      flash[:invalid_password] = "Invalid email or password"
-    end
-  end
-
   def create
-    user = User.new(user_params)
+    user = User.create(user_params)
     if user.save
-      redirect_to "/users/#{user.id}"
+      session[:user_id] = user.id
+      redirect_to "/dashboard"
     else
       flash[:invalid_password] = user.errors.full_messages.to_sentence
       render :new

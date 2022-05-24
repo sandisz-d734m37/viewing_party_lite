@@ -17,7 +17,7 @@ class PartiesController < ApplicationController
     if party.save
       Invitation.create!(user_id: party.user_id, party_id: party.id)
       params[:invited_users].each { |user_id| Invitation.create!(user_id: user_id, party_id: party.id) }
-      redirect_to "/users/#{party.user_id}"
+      redirect_to "/dashboard"
     else
       redirect_to "/users/#{party.user_id}/movies/#{params[:movie_id]}/parties/new"
       flash[:invalid_duration] = "Invalid Data: Duration must be greater than or equal to the movie's runtime."
