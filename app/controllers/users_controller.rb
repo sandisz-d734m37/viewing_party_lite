@@ -11,11 +11,9 @@ class UsersController < ApplicationController
 
   def login_user
     user = User.find_by(email: params[:email])
-    # binding.pry
     if !user.nil? && user.authenticate(params[:password])
       redirect_to("/users/#{user.id}")
     else
-      # binding.pry
       redirect_to("/login")
       flash[:invalid_password] = "Invalid email or password"
     end
@@ -26,7 +24,6 @@ class UsersController < ApplicationController
     if user.save
       redirect_to "/users/#{user.id}"
     else
-      flash[:invalid_email] = "There is already an account associated with this e-mail address."
       flash[:invalid_password] = user.errors.full_messages.to_sentence
       render :new
     end
