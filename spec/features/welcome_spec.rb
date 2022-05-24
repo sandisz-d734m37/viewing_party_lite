@@ -26,7 +26,7 @@ describe "welcome page" do
 
         click_link("Tony Soprano")
 
-        expect(current_path).to eq("/users/#{@user_1.id}")
+        expect(current_path).to eq("/dashboard")
       end
 
       it "i see a link to go back to the landing page" do

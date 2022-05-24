@@ -14,7 +14,7 @@ describe "login page" do
         fill_in "Password", with: "test"
         click_button "Log in"
 
-        expect(current_path).to eq("/users/#{@user_2.id}")
+        expect(current_path).to eq("/dashboard")
       end
 
       it "shows error if password is incorrect" do
