@@ -41,18 +41,28 @@ describe "welcome page" do
         expect(current_path).to eq("/login")
       end
 
-      it "If I log in, the log in link dissapears" do
-        expect(page).to have_link("Log in")
-        click_link("Log in")
+      context "log in/out" do
+        before do
+          click_link("Log in")
 
-        fill_in "Email", with: "varsityathlete@gmail.com"
-        fill_in "Password", with: "test"
-        click_button "Log in"
+          fill_in "Email", with: "varsityathlete@gmail.com"
+          fill_in "Password", with: "test"
+          click_button "Log in"
+        end
+        it "If I log in, the log in link dissapears" do
+          expect(page).not_to have_link("Log in")
+          expect(page).to have_link("Log out")
+        end
 
-        expect(current_path).to eq('/')
-        expect(page).not_to have_link("Log in")
-        expect(page).to have_link("Log out")
+        it "logs you out if you click log out" do
+          expect(page).not_to have_link("Log in")
+          expect(page).to have_link("Log out")
+          click_link("Log out")
+          expect(page).to have_link("Log in")
+          expect(page).not_to have_link("Log out")
+        end
       end
+
     end
   end
 end
