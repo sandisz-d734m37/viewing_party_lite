@@ -56,9 +56,11 @@ describe "welcome page" do
 
         it "logs you out if you click log out" do
           expect(page).not_to have_link("Log in")
+          expect(page).not_to have_link("Register")
           expect(page).to have_link("Log out")
           click_link("Log out")
           expect(page).to have_link("Log in")
+          expect(page).to have_link("Register")
           expect(page).not_to have_link("Log out")
         end
       end
