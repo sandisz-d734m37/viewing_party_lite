@@ -14,20 +14,25 @@ describe "User dashboard/show" do
     @u2_vp_inv_1 = Invitation.create!(user_id: @user2.id, party_id: @u2_vp.id)
     @u2_vp_inv_2 = Invitation.create!(user_id: @user3.id, party_id: @u2_vp.id)
 
+    visit "/login"
+    fill_in "Email", with: "user1@test.com"
+    fill_in "Password", with: "test"
+    click_button "Log in"
+
     VCR.insert_cassette("has_a_section_that_lists_viewing_parties")
-    visit "/users/#{@user1.id}"
+    visit "/dashboard"
   end
 
   after do
     VCR.eject_cassette
   end
 
-  it "displays the users name" do
+  it "displays the users name", :vcr do
     expect(page).to have_content("User One's page")
     expect(page).not_to have_content("User Two's page")
   end
 
-  it "has a button to discover movies" do
+  it "has a button to discover movies", :vcr do
     click_button("Discover Movies")
 
     expect(current_path).to eq("/users/#{@user1.id}/discover")
@@ -50,7 +55,7 @@ describe "User dashboard/show" do
     end
   end
 
-  it "i see a link to go back to the landing page" do
+  it "i see a link to go back to the landing page", :vcr do
     click_link("Return to Home Page")
 
     expect(current_path).to eq("/")
@@ -64,7 +69,7 @@ describe "User dashboard/show" do
       VCR.insert_cassette("has_a_section_that_lists_viewing_parties")
     end
     it "displays movie invitation content when user is not the hose", :vcr do
-      visit "/users/#{@user3.id}"
+      visit "/dashboard?user_id=#{@user3.id}"
       within "#party_#{@u2_vp.id}" do
         expect(page.find("#movie_poster")["src"]).to have_content "http://image.tmdb.org/t/p/w300/2yYP0PQjG8zVqturh1BAqu2Tixl.jpg"
         expect(page).to have_content("Party ##{@u2_vp.id}")

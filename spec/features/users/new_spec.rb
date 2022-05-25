@@ -46,7 +46,7 @@ describe "user new page" do
 
         click_button "Register"
 
-        expect(page).to have_content("There is already an account associated with this e-mail address.")
+        expect(page).to have_content("Email has already been taken")
       end
     end
   end

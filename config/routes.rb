@@ -1,10 +1,14 @@
 Rails.application.routes.draw do
   get "/", to: "welcome#index"
+  # get "/users", to: "users#show"
   get "/register", to: "users#new"
-  get "/login", to: "users#login"
-  post "/login", to: "users#login_user"
+  post "/register", to: "users#create"
+  get "/login", to: "sessions#new"
+  post "/login", to: "sessions#create"
+  get "/logout", to: "sessions#destroy"
+  get "/dashboard", to: "users#show"
 
-  resources :users, only: [:show, :new, :create] do
+  resources :users, only: [:new] do
     resources :discover, only: [:index], controller: "movies"
     resources :movies, only: [:show] do
       resources :parties, only: [:new, :create]

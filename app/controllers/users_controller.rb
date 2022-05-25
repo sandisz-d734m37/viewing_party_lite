@@ -1,32 +1,24 @@
 class UsersController < ApplicationController
   def show
-    @user = User.find(params[:id])
+    if params[:user_id]
+      @user = User.find(params[:user_id])
+    elsif current_user
+      @user = User.find(session[:user_id])
+    else
+      redirect_to '/'
+      flash[:not_logged_in] = "You must log in or register to visit the dashboard"
+    end
   end
 
   def new
   end
 
-  def login
-  end
-
-  def login_user
-    user = User.find_by(email: params[:email])
-    # binding.pry
-    if !user.nil? && user.authenticate(params[:password])
-      redirect_to("/users/#{user.id}")
-    else
-      # binding.pry
-      redirect_to("/login")
-      flash[:invalid_password] = "Invalid email or password"
-    end
-  end
-
   def create
-    user = User.new(user_params)
+    user = User.create(user_params)
     if user.save
-      redirect_to "/users/#{user.id}"
+      session[:user_id] = user.id
+      redirect_to "/dashboard"
     else
-      flash[:invalid_email] = "There is already an account associated with this e-mail address."
       flash[:invalid_password] = user.errors.full_messages.to_sentence
       render :new
     end
