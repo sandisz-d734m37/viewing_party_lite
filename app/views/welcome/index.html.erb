@@ -1,5 +1,10 @@
-<h1>Welcome to Viewing Party!</h1>
-<%= link_to "Log in", "/login" %>
+<% if current_user %>
+  Welcome back! <br>
+  <%= link_to 'Log out', '/logout' %>
+<% else %>
+  <h1>Welcome to Viewing Party!</h1>
+  <%= link_to "Log in", "/login" %>
+<% end %>
 <hr>
 <h3>Current Users:</h3>
 <% @users.each do |user| %>
