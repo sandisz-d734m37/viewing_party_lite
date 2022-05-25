@@ -63,10 +63,19 @@ describe "welcome page" do
           expect(page).not_to have_link("Log in")
           expect(page).not_to have_link("Register")
           expect(page).to have_link("Log out")
-          click_link("Log out")
+          click_link "Log out"
           expect(page).to have_link("Log in")
           expect(page).to have_link("Register")
           expect(page).not_to have_link("Log out")
+        end
+
+        it "'/dashboard' redirects to welcome page if not loggged in" do
+          click_link "Log out"
+
+          visit "/dashboard"
+
+          expect(current_path).to eq('/')
+          expect(page).to have_content('You must log in or register to visit the dashboard')
         end
       end
 
