@@ -2,8 +2,11 @@ class UsersController < ApplicationController
   def show
     if params[:user_id]
       @user = User.find(params[:user_id])
-    else
+    elsif current_user
       @user = User.find(session[:user_id])
+    else
+      redirect_to '/'
+      flash[:not_logged_in] = "You must log in or register to visit the dashboard"
     end
   end
 

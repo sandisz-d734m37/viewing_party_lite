@@ -1,16 +1,18 @@
+<% flash.each do |type, message| %>
+  <p><%= message %></p>
+<% end %>
 <% if current_user %>
   Welcome back! <br>
   <%= link_to 'Log out', '/logout' %>
+  <hr>
+  <h3>Current Users:</h3>
+  <% @users.each do |user| %>
+    <!-- <h3><%# link_to "#{user.name}", "/dashboard?user_id=#{user.id}" %></h3> -->
+    <p><%= user.email %></p>
+    <hr>
+  <% end %>
 <% else %>
   <h1>Welcome to Viewing Party!</h1>
   <%= link_to "Log in", "/login" %>
   <%= link_to "Register", "/register" %>
 <% end %>
-<hr>
-<h3>Current Users:</h3>
-<% @users.each do |user| %>
-  <h3><%= link_to "#{user.name}", "/dashboard?user_id=#{user.id}" %></h3>
-  <p><%= user.email %></p>
-  <hr>
-<% end %>
-<%= button_to "Create New User", "/users/new", method: :get %><br>
