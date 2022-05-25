@@ -5,6 +5,10 @@ describe "movie show page" do
     describe "when i visit a movie show page" do
       before do
         @user1 = User.create!(name: "User One", email: "user1@test.com", password: 'test', password_confirmation: 'test')
+        visit "/login"
+        fill_in "Email", with: "user1@test.com"
+        fill_in "Password", with: "test"
+        click_button "Log in"
         visit "/users/#{@user1.id}/movies/290"
       end
 
@@ -54,6 +58,21 @@ describe "movie show page" do
           expect(page).to have_content("Author: Andres Gomez")
           expect(page).to have_content("Review: Far from being a good movie, with tons of flaws but already pointing to the pattern of the whole Ritchie's filmography.")
           expect(page).to have_content("Number of Reviews: 4")
+        end
+      end
+
+      context "Authorizations" do
+        before do
+          visit '/'
+          click_link 'Log out'
+          visit "/users/#{@user1.id}/movies/290"
+        end
+
+        it "won't allow you to create a party if not logged in", :vcr do
+          click_button "Create Viewing Party"
+
+          expect(current_path).to eq("/users/#{@user1.id}/movies/290")
+          expect(page).to have_content("You must log in or register to create a viewing party")
         end
       end
     end
